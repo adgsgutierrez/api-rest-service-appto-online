@@ -1,0 +1,2 @@
+GIF (requires "amp-anim" script in header):
+{{token}}
