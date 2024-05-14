@@ -12,6 +12,5 @@ export interface IUserRegister {
 
 export interface IUserPreRegister extends IUserRegister{
     validateEmail: boolean;
-    validatePhone: boolean;
-    tokenActivate: string;
+    tokenActivate: boolean;
 }

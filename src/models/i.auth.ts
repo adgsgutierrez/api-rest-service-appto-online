@@ -3,3 +3,7 @@ export interface IToken {
     client: string;
     client_secret: string;
 }
+
+export interface IValidate {
+    id: string;
+}

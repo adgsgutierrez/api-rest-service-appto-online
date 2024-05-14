@@ -1,7 +1,9 @@
 import { IResponse } from "../../models/i.response";
 import { IUserPreRegister, IUserRegister } from "../../models/i.user";
 import { DATABASE, RESPONSE_OBJECT } from "../../utilities/constants";
+import { BASE64 } from "../../utilities/utils";
 import { ApiMaster } from "../api.master";
+import { v4 as uuidv4 } from 'uuid';
 
 export class RegisterUserController extends ApiMaster {
 
@@ -23,10 +25,12 @@ export class RegisterUserController extends ApiMaster {
     async get(_body: { [key: string]: any; }): Promise<IResponse> {
         try{
             const input: IUserRegister = _body as IUserRegister;
-            const _user: IUserPreRegister = { ...input , validateEmail: false, validatePhone: false , tokenActivate: ''};
-            const resp = await this.database.set( DATABASE.usersTower , _user );
-            const destiny = `${ _user.name} <${_user.email}>`;
-            const responseSendMail = await this.mail.sendMail( destiny , 'Activación de Cuenta' , 'register' , { token: 'Aqui va el token' } );
+            const uuid = uuidv4();
+            const _strTokenUuid = BASE64.encode(uuid);
+            const _user: IUserPreRegister = { ...input , validateEmail: false, tokenActivate: false };
+            const resp = await this.database.setWithId( DATABASE.usersTower , uuid , _user );
+            const destiny = `${_user.name} <${_user.email}>`;
+            const responseSendMail = await this.mail.sendMail( destiny , 'Activación de Cuenta' , 'register' , { token: _strTokenUuid } );
             return { ...RESPONSE_OBJECT[200] , data: { userload: resp, mail: responseSendMail.accepted } };
         } catch ( _err ) {
             return Promise.resolve({ ...RESPONSE_OBJECT[500] , data: _err });

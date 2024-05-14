@@ -2,6 +2,7 @@ import { CreateResidentialController } from "./booking/create.residential.contro
 import { ListResidentialController } from "./booking/list.residential.controller";
 import { LoginController } from "./user/login.controller";
 import { RegisterUserController } from "./user/register.controller";
+import { ValidateUserController } from "./user/validate.controller";
 import { StatusController } from "./utilities/status.controller";
 import { TokenController } from "./utilities/token.controller";
 
@@ -14,5 +15,6 @@ export const APIS = [
     new ListResidentialController(),
     new CreateResidentialController(),
     new RegisterUserController(),
+    new ValidateUserController(),
     tokenService
 ]

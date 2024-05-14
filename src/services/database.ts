@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { doc , setDoc, getDoc, collection, getFirestore, getDocs } from "firebase/firestore"
+import { doc , setDoc, getDoc, collection, getFirestore, getDocs, addDoc } from "firebase/firestore"
 import { FIREBASE } from "../utilities/constants";
 
 export class DatabaseService{
@@ -80,6 +80,12 @@ export class DatabaseService{
     public async set( nameCollection: string , data: any ): Promise<any>{
         const collectionResult = collection(this.database, nameCollection);
         const response = await setDoc( doc(collectionResult) , { ...data } );
+        return response;
+    }
+
+    public async setWithId( nameCollection: string , id: string, data: any ): Promise<any>{
+        const collectionResult = collection(this.database, nameCollection);
+        const response =  await setDoc( doc(collectionResult , id) , { ...data } );
         return response;
     }
 }

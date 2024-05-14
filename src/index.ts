@@ -30,15 +30,19 @@ app.use( async (req, res, next) => {
 });
 
 const processRequest = async (req: Request, res: Response , controller: ApiMaster) => {
-	let params = { ...req.query , ...req.body, ...req.params };
-	const response = await controller.get(params);
-	res.status(response.code).json( response );
+	try{
+		let params = { ...req.query , ...req.body, ...req.params };
+		const response = await controller.get(params);
+		res.status(response.code).json( response );
+	}catch (err){
+		res.status(500).send(err);
+	}
 }
 
 APIS.forEach( controller => {
 	switch (controller.METHOD) {
 		case 'GET':
-			app.get( controller.PATH , async (req: Request, res: Response ) => { 
+			app.get( controller.PATH , async (req: Request, res: Response ) => {
 				await processRequest(req, res , controller);
 			});
 			break;
