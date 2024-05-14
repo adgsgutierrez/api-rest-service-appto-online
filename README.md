@@ -64,7 +64,7 @@ El proyecto cuenta con la siguiente definición de api's
 
 ### APIS de la sección de usuarios
 
-#### Guardar un conjunto en la aplicación
+#### Registrar usuario en la aplicación
 
 ```http
   POST /api/user/register
@@ -84,7 +84,7 @@ El proyecto cuenta con la siguiente definición de api's
 | Body Param | `password` | `string` | **Required**. Contraseña que desea utilizar el usuario que registra |
 | Body Param | `validatePassword` | `string` | **Required**. Confirmación de contraseña del usuario que registra |
 
-#### Guardar un conjunto en la aplicación
+#### Iniciar sesión en la aplicación
 
 ```http
   POST /api/user/login
@@ -96,6 +96,18 @@ El proyecto cuenta con la siguiente definición de api's
 | :---------- | :----- | :------- | :------------------------- |
 | Body Param | `user` | `string` | **Required**. Correo de la persona que ingresa a la aplicación |
 | Body Param | `password` | `string` | **Required**. Contraseña de la persona que ingresa a la aplicación |
+
+#### Validar usuario registrado en la aplicación
+
+```http
+  POST /api/user/validate
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+```
+
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Query Param | `id` | `string` | **Required**. Id recibido por correo para validar correos existentes |
 
 
 ## Instalación
