@@ -119,6 +119,14 @@ Para realizar la instalación de este proyecto se deben seguir os siguientes pas
   cd api-rest-service-appto-online
   npm install
 ```
+## Development
+
+Para mantener el servidor en modo escucha mientras se realizan desarrollos
+
+```bash
+  npm run dev
+```
+
 ## Ejecutar
 
 Para ejecutar el proyecto de forma local se deben seguir los siguientes comandos
@@ -136,7 +144,6 @@ Para realizar el despliegue de este proyecto se deben seguir os siguientes pasos
   npm run build
   vercel deploy 
 ```
-
 
 ## Autor
 

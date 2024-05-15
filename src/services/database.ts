@@ -1,11 +1,13 @@
+import { Firestore, QueryFieldFilterConstraint, query, where } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import { doc , setDoc, getDoc, collection, getFirestore, getDocs, addDoc } from "firebase/firestore"
+import { doc , setDoc, getDoc, collection, getFirestore, getDocs } from "firebase/firestore"
 import { FIREBASE } from "../utilities/constants";
+import { IQueryOptions } from "../models/i.database";
 
 export class DatabaseService{
 
     private static instance: DatabaseService;
-    private database: any;
+    private database: Firestore;
 
 /**
  * La función anterior es un constructor privado que inicializa una aplicación de Firebase y obtiene
@@ -57,9 +59,9 @@ export class DatabaseService{
     public async getAll<T>( nameCollection: string ): Promise<T[]>{
         const collectionResult = collection(this.database, nameCollection);
         const data = await getDocs(collectionResult);
-        let values:T[] = []
+        const values:T[] = [];
         data.forEach( doc => {
-            const dat: any = doc.data();
+            const dat: T = doc.data() as T;
             values.push({ id: doc.id, ...dat });
         });
         return values;
@@ -77,15 +79,55 @@ export class DatabaseService{
  * @returns La función `set` devuelve una Promesa que se resuelve en la respuesta al configurar un
  * documento en la colección especificada con los datos proporcionados.
  */
-    public async set( nameCollection: string , data: any ): Promise<any>{
+    public async set<T>( nameCollection: string , data:  T | unknown ): Promise<T>{
         const collectionResult = collection(this.database, nameCollection);
-        const response = await setDoc( doc(collectionResult) , { ...data } );
+        const response = await setDoc( doc(collectionResult) , data ) as T;
         return response;
     }
 
-    public async setWithId( nameCollection: string , id: string, data: any ): Promise<any>{
+/**
+ * Esta función de TypeScript establece un documento con una ID específica en una colección específica
+ * y devuelve la respuesta.
+ * @param {string} nameCollection - El parámetro `nameCollection` es una cadena que representa el
+ * nombre de la colección en la base de datos donde se almacenarán los datos.
+ * @param {string} id - El parámetro `id` en la función `setWithId` representa el identificador único o
+ * clave que se utilizará para identificar y almacenar los datos en la colección especificada.
+ * Normalmente es un valor de cadena que identifica de forma única el documento dentro de la colección.
+ * @param {T | unknown} data - El parámetro `datos` en la función `setWithId` representa la información
+ * u objeto que desea almacenar en la base de datos con una ID específica. Puede ser de tipo `T` (el
+ * tipo genérico especificado al llamar a la función) o `desconocido` si el tipo no se conoce en
+ * @returns La función `setWithId` devuelve una Promesa que se resuelve en un valor de tipo `T`.
+ */
+    public async setWithId<T>( nameCollection: string , id: string, data: T | unknown ): Promise<T>{
         const collectionResult = collection(this.database, nameCollection);
-        const response =  await setDoc( doc(collectionResult , id) , { ...data } );
+        const response =  await setDoc( doc(collectionResult , id) , data ) as T;
         return response;
+    }
+
+/**
+ * Esta función de TypeScript realiza una operación de búsqueda en una colección específica utilizando
+ * opciones de consulta y devuelve los resultados como una matriz.
+ * @param {string} nameCollection - El parámetro `nameCollection` en el método `search` representa el
+ * nombre de la colección en la base de datos en la que desea buscar. Es una cadena que especifica la
+ * colección donde se realizará la operación de búsqueda.
+ * @param {IQueryOptions[]} params - El parámetro `params` en el método `search` es una matriz de
+ * objetos que implementan la interfaz `IQueryOptions`. Cada objeto de la matriz contiene las
+ * siguientes propiedades:
+ * @returns La función `buscar` devuelve una matriz de objetos de tipo `T`.
+ */
+    public async search<T>( nameCollection: string , params: IQueryOptions[]): Promise<T[]>{
+        const arrayQueries: QueryFieldFilterConstraint[] = [];
+        params.forEach( param => {
+            arrayQueries.push ( where(param.key , param.compare , param.value ) );
+        });
+        const collectionResult = collection(this.database, nameCollection);
+        const _query = query( collectionResult , ...arrayQueries);
+        const response = await getDocs(_query);
+        const values:T[] = [];
+        response.forEach( doc => {
+            const dat: T = doc.data() as T;
+            values.push({ id: doc.id, ...dat });
+        });
+        return values;
     }
 }

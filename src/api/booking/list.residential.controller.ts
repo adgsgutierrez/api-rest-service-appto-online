@@ -1,9 +1,10 @@
+import { NoneParams } from "../../models/i.request";
 import { IResidentials } from "../../models/i.residential";
 import { IResponse } from "../../models/i.response";
 import { DATABASE, RESPONSE_OBJECT } from "../../utilities/constants";
 import { ApiMaster } from "../api.master";
 
-export class ListResidentialController extends ApiMaster {
+export class ListResidentialController extends ApiMaster<NoneParams> {
 
     readonly METHOD = 'GET';
     readonly PATH = '/api/residential/list';
@@ -20,12 +21,12 @@ export class ListResidentialController extends ApiMaster {
  * durante la operación de la base de datos, devuelve un código de estado 500 junto con el objeto de
  * error.
  */
-    async get(_body: { [key: string]: any; }): Promise<IResponse> {
+    async get(): Promise<IResponse> {
         try{
             const list: IResidentials[] = await this.database.getAll( DATABASE.residential );
             return { ...RESPONSE_OBJECT[200] , data: list.map( item => {
                     return {id: item.id , name: item.name , address: item.address };
-                }) 
+                })
             }
         } catch ( _err ) {
             return Promise.resolve({ ...RESPONSE_OBJECT[500] , data: _err });

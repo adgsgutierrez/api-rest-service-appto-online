@@ -4,7 +4,7 @@ import { IUserPreRegister } from "../../models/i.user";
 import { DATABASE, RESPONSE_OBJECT } from "../../utilities/constants";
 import { ApiMaster } from "../api.master";
 
-export class ValidateUserController extends ApiMaster {
+export class ValidateUserController extends ApiMaster<IValidate> {
 
     readonly METHOD = 'GET';
     readonly PATH = '/api/user/validate';
@@ -20,15 +20,13 @@ export class ValidateUserController extends ApiMaster {
  * usuario después de actualizar sus propiedades `validateEmail` y `tokenActivate` en la base de datos.
  * .
  */
-    async get(body: { [key: string]: any; }): Promise<IResponse> {
-        const input: IValidate = body as IValidate;
-        const uuid = (Buffer.from(input.id, 'base64')).toString();
+    async get(body: IValidate): Promise<IResponse> {
+        const uuid = (Buffer.from(body.id, 'base64')).toString();
         const _user = await this.database.getWithId<IUserPreRegister>( DATABASE.usersTower , uuid);
         _user.validateEmail = true;
-        _user.tokenActivate = true;
-        await this.database.setWithId(DATABASE.usersTower , uuid , _user);
+        await this.database.setWithId<IUserPreRegister>(DATABASE.usersTower , uuid , _user);
         const _userPost = await this.database.getWithId<IUserPreRegister>( DATABASE.usersTower , uuid);
-        return Promise.resolve( { ...RESPONSE_OBJECT[200] , data: { name: _userPost.name, email: _userPost.email , isActive: (_userPost.tokenActivate && _userPost.validateEmail) } });
+        return Promise.resolve( { ...RESPONSE_OBJECT[200] , data: { name: _userPost.name, email: _userPost.email } });
     }
 
 }
