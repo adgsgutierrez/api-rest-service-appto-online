@@ -1,31 +1,151 @@
-# Node.js Hello World
+# ApptOnline Api Rest Service
 
-Simple Node.js + Vercel example that returns a "Hello World" response.
+Este proyecto contiene las definiciones de las api de servicios utilizados por la aplicación web ApptOnline
 
-## How to Use
+## Descripciones
 
-You can choose from one of the following two methods to use this repository:
+El proyecto cuenta con la siguiente definición de api's
 
-### One-Click Deploy
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+## Documentación de referencia de servicios
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/examples/tree/main/solutions/node-hello-world&project-name=node-hello-world&repository-name=node-hello-world)
+### Utilerias
 
-### Clone and Deploy
+#### Obtener el estado del servidor, si se encuentra activo y en ejecución
 
-```bash
-git clone https://github.com/vercel/examples/tree/main/solutions/node-hello-world
+```http
+  GET /api/utilities/status
+
+  SIN SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
 ```
 
-Install the Vercel CLI:
+#### Obtener un token para incovar las api
 
-```bash
-npm i -g vercel
+```http
+  POST /api/utilities/token
+
+  SIN SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
 ```
 
-Then run the app at the root of the repository:
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Body Param | `serial` | `string` | **Required**. Id de identificación del registro de la base de datos |
+| Body Param | `client` | `string` | **Required**. Id del registro del cliente que realiza el consumo de la aplicación |
+| Body Param | `client_secret` | `string` | **Required**. Id del secret del cliente que realiza la petición |
+
+### APIS de la sección de Conjuntos
+
+#### Listar los conjustos registrados en la aplicación
+
+```http
+  GET /api/residential/list
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+```
+
+#### Guardar un conjunto en la aplicación
+
+```http
+  POST /api/residential
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+```
+
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Body Param | `address` | `string` | **Required**. Dirección locativa del conjunto |
+| Body Param | `name` | `string` | **Required**. Nombre del conjunto |
+| Body Param | `lat` | `number` | **Required**. Latitud del conjunto |
+| Body Param | `long` | `number` | **Required**. Longitud del conjunto |
+| Body Param | `nameAdministrator` | `string` | **Required**. Nombre del administrador actual del conjunto |
+| Body Param | `email` | `string` | **Required**. Email de la administración del conjunto |
+| Body Param | `phone` | `string` | **Required**. Celular de la administración del conjunto |
+| Body Param | `localPhone` | `string` | **Required**. Telefono fijo de la administración del conjunto |
+
+### APIS de la sección de usuarios
+
+#### Registrar usuario en la aplicación
+
+```http
+  POST /api/user/register
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+```
+
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Body Param | `name` | `string` | **Required**. Nombre de la persona que realiza el registro |
+| Body Param | `email` | `string` | **Required**. Email de la persona que realiza el registro |
+| Body Param | `residential.id` | `string` | **Required**. Id del conjunto |
+| Body Param | `residential.address` | `string` | **Required**. Dirección del conjunto |
+| Body Param | `residential.name` | `string` | **Required**. Nombre del conjunto |
+| Body Param | `tower` | `string` | **Required**. Torre del conjunto a la que pertenece el usuario que registra |
+| Body Param | `number` | `string` | **Required**. Numero del apartamento al que pertenece el usuario que registra |
+| Body Param | `password` | `string` | **Required**. Contraseña que desea utilizar el usuario que registra |
+| Body Param | `validatePassword` | `string` | **Required**. Confirmación de contraseña del usuario que registra |
+
+#### Iniciar sesión en la aplicación
+
+```http
+  POST /api/user/login
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+```
+
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Body Param | `user` | `string` | **Required**. Correo de la persona que ingresa a la aplicación |
+| Body Param | `password` | `string` | **Required**. Contraseña de la persona que ingresa a la aplicación |
+
+#### Validar usuario registrado en la aplicación
+
+```http
+  POST /api/user/validate
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+```
+
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Query Param | `id` | `string` | **Required**. Id recibido por correo para validar correos existentes |
+
+
+## Instalación
+
+Para realizar la instalación de este proyecto se deben seguir os siguientes pasos
 
 ```bash
-vercel dev
+  clonar el proyecto
+  cd api-rest-service-appto-online
+  npm install
 ```
+## Development
+
+Para mantener el servidor en modo escucha mientras se realizan desarrollos
+
+```bash
+  npm run dev
+```
+
+## Ejecutar
+
+Para ejecutar el proyecto de forma local se deben seguir los siguientes comandos
+
+```bash
+  npm run build
+  npm run start
+```
+
+## Deployment
+
+Para realizar el despliegue de este proyecto se deben seguir os siguientes pasos
+
+```bash
+  npm run build
+  vercel deploy 
+```
+
+## Autor
+
+- [@Aric Dayan Gutierrez Sanchez](https://github.com/adgsgutierrez)
+
