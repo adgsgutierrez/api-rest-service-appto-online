@@ -7,3 +7,8 @@ export interface IToken {
 export interface IValidate {
     id: string;
 }
+
+export interface ILogin {
+    login: boolean;
+    message: string;
+}

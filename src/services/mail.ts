@@ -19,9 +19,8 @@ export class MailService {
  * configuración de MailService obteniendo la ruta de forma asincrónica.
  */
     private constructor(){
-        let _this = this;
         MailService.path().then( response => {
-            _this.config = response;
+            this.config = response;
         }, err => {
             throw new Error({ msg: "Error into conect to mailer service", ...err});
         });
@@ -54,14 +53,14 @@ export class MailService {
  * Cada propiedad contiene un valor de cadena que es el resultado de compilar una plantilla usando
  * Manillar con los datos del "cuerpo" proporcionados.
  */
-    private static async getTemplate( templateName: string , body: any ): Promise<{text: string;html: string;amp: string;}>{
+    private static async getTemplate<T>( templateName: string , body: T ): Promise<{text: string;html: string;amp: string;}>{
         const route = path.join(__dirname , '../' , 'templates' , templateName);
-        let amp = await readFile( path.join( route, 'amp.html' ), 'utf8');
-        let html = await readFile( path.join( route, 'basic.html' ), 'utf8');
-        let basic = await readFile( path.join( route, 'basic.txt' ), 'utf8');
-        let templateAmp = handlebars.compile(amp);
-        let templateHtml = handlebars.compile(html);
-        let templateBasic = handlebars.compile(basic);
+        const amp = await readFile( path.join( route, 'amp.html' ), 'utf8');
+        const html = await readFile( path.join( route, 'basic.html' ), 'utf8');
+        const basic = await readFile( path.join( route, 'basic.txt' ), 'utf8');
+        const templateAmp = handlebars.compile(amp);
+        const templateHtml = handlebars.compile(html);
+        const templateBasic = handlebars.compile(basic);
         return { 
             text: templateBasic(body),
             html: templateHtml(body),
@@ -90,7 +89,7 @@ export class MailService {
  * `info` si el correo electrónico se envía exitosamente, o rechaza con un error si hubo un problema al
  * enviar el correo electrónico.
  */
-    public async sendMail( destiny: string, subject: string, templateName: string ,  body: any ) : Promise<any> {
+    public async sendMail( destiny: string, subject: string, templateName: string ,  body: unknown ) : Promise<unknown> {
         const templates = await MailService.getTemplate( templateName , body);
         const mailOptions = {
             from: KEYS.email.email,
@@ -99,7 +98,7 @@ export class MailService {
            ...templates
         };
         return new Promise( (success , reject) => {
-            this.config.sendMail(mailOptions , (error, info: any) => {
+            this.config.sendMail(mailOptions , (error, info: unknown ) => {
                 if (error) { reject(error); } else { success(info); }
             });
         });
@@ -130,7 +129,8 @@ export class MailService {
               resolve(token); 
             });
         }) || '';
-        let _configMailer: any = {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const _configMailer: any = {
             service: "gmail",
             auth: {
                 type: "OAuth2",

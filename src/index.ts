@@ -7,7 +7,9 @@ const app = express();
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { RESPONSE_OBJECT } from "./utilities/constants";
+import { NoneParams } from "./models/i.request";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -29,9 +31,9 @@ app.use( async (req, res, next) => {
 	}
 });
 
-const processRequest = async (req: Request, res: Response , controller: ApiMaster) => {
+const processRequest = async (req: Request, res: Response , controller: ApiMaster<NoneParams>) => {
 	try{
-		let params = { ...req.query , ...req.body, ...req.params };
+		const params = { ...req.query , ...req.body, ...req.params };
 		const response = await controller.get(params);
 		res.status(response.code).json( response );
 	}catch (err){
@@ -58,7 +60,7 @@ APIS.forEach( controller => {
 
 app.listen(3000, () =>{
 	const endpoints = expressListEndpoints(app);
-	endpoints.forEach((element: {methods: string[], path: string, middlewares: any}) => {
+	endpoints.forEach((element: {methods: string[], path: string, middlewares: unknown}) => {
 		console.log(`${element.methods.join('|')} : ${element.path}`);
 	});
 });

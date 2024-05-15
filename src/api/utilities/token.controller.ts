@@ -5,7 +5,7 @@ import { ApiMaster } from "../api.master";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-export class TokenController extends ApiMaster {
+export class TokenController extends ApiMaster<IToken> {
 
     readonly METHOD = 'POST';
     readonly PATH = '/api/utilities/token';
@@ -20,14 +20,13 @@ export class TokenController extends ApiMaster {
  * @returns El método `get` devuelve una Promesa que se resuelve en un objeto `IResponse`. Dependiendo
  * de las condiciones que se cumplan en el bloque try, devolverá diferentes respuestas:
  */
-    async get(body: { [key: string]: any; }): Promise<IResponse> {
+    async get(body: IToken): Promise<IResponse> {
         try{
-            const input: IToken = body as IToken;
-            let client = await this.database.getWithId<IToken>( DATABASE.userAuth , input.serial );
-            const _cClient = await bcrypt.compare(input.client , client.client);
-            const _cSecret = await bcrypt.compare(input.client_secret , client.client_secret);
+            const client = await this.database.getWithId<IToken>( DATABASE.userAuth , body.serial );
+            const _cClient = await bcrypt.compare(body.client , client.client);
+            const _cSecret = await bcrypt.compare(body.client_secret , client.client_secret);
             if(_cSecret && _cClient) {
-                const _payload = Buffer.from(JSON.stringify(input)).toString('base64')
+                const _payload = Buffer.from(JSON.stringify(body)).toString('base64')
                 const token = jwt.sign( { uuid: _payload } , KEYS.auth.secret , { expiresIn: KEYS.auth.expire , encoding: 'utf8' , algorithm: "HS512" });
                 return Promise.resolve({ ...RESPONSE_OBJECT[200] , data: { type: 'Bearer' ,  token , expire: KEYS.auth.expire } });
             }
@@ -54,7 +53,7 @@ export class TokenController extends ApiMaster {
             const _payload: {uuid: string} = jwt.verify(_token , KEYS.auth.secret) as { uuid: ''};
             const _strClient = Buffer.from(_payload.uuid, 'base64').toString('ascii');
             const _vefiryToken: IToken = JSON.parse(_strClient) as IToken;
-            let client = await this.database.getWithId<IToken>( DATABASE.userAuth , _vefiryToken.serial );
+            const client = await this.database.getWithId<IToken>( DATABASE.userAuth , _vefiryToken.serial );
             const _cClient = await bcrypt.compare(_vefiryToken.client , client.client);
             const _cSecret = await bcrypt.compare(_vefiryToken.client_secret , client.client_secret);
             return (_cSecret && _cClient);
