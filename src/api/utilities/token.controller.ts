@@ -2,7 +2,7 @@ import { IToken } from "../../models/i.auth";
 import { IResponse } from "../../models/i.response";
 import { DATABASE, KEYS, RESPONSE_OBJECT } from "../../utilities/constants";
 import { ApiMaster } from "../api.master";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
 
 export class TokenController extends ApiMaster<IToken> {
