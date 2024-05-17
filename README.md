@@ -2,10 +2,44 @@
 
 Este proyecto contiene las definiciones de las api de servicios utilizados por la aplicación web ApptOnline
 
+## Instalación
+
+Para realizar la instalación de este proyecto se deben seguir os siguientes pasos
+
+```bash
+  clonar el proyecto
+  cd api-rest-service-appto-online
+  npm install
+```
+## Development
+
+Para mantener el servidor en modo escucha mientras se realizan desarrollos
+
+```bash
+  npm run dev
+```
+
+## Ejecutar
+
+Para ejecutar el proyecto de forma local se deben seguir los siguientes comandos
+
+```bash
+  npm run build
+  npm run start
+```
+
+## Deployment
+
+Para realizar el despliegue de este proyecto se deben seguir os siguientes pasos
+
+```bash
+  npm run build
+  vercel deploy 
+```
+
 ## Descripciones
 
 El proyecto cuenta con la siguiente definición de api's
-
 
 ## Documentación de referencia de servicios
 
@@ -109,41 +143,36 @@ El proyecto cuenta con la siguiente definición de api's
 | :---------- | :----- | :------- | :------------------------- |
 | Query Param | `id` | `string` | **Required**. Id recibido por correo para validar correos existentes |
 
+### APIS de la sección de Ubicaciones de prestamo
 
-## Instalación
+#### Listar ubicaciones de prestamo
 
-Para realizar la instalación de este proyecto se deben seguir os siguientes pasos
-
-```bash
-  clonar el proyecto
-  cd api-rest-service-appto-online
-  npm install
-```
-## Development
-
-Para mantener el servidor en modo escucha mientras se realizan desarrollos
-
-```bash
-  npm run dev
+```http
+  GET /api/location/list
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
 ```
 
-## Ejecutar
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Query Param | `idResidential` | `string` | **Required**. Id del conjunto del cual se buscarán las ubicaciones de prestamo |
 
-Para ejecutar el proyecto de forma local se deben seguir los siguientes comandos
+#### Crear ubicaciones de prestamo
 
-```bash
-  npm run build
-  npm run start
+```http
+  POST /api/location
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
 ```
 
-## Deployment
-
-Para realizar el despliegue de este proyecto se deben seguir os siguientes pasos
-
-```bash
-  npm run build
-  vercel deploy 
-```
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Body Param | `idResidential` | `string` | **Required**. Id del conjunto del cual se buscarán las ubicaciones de prestamo |
+| Body Param | `location.name` | `string` | **Required**. Nombre de la ubicación de prestamo |
+| Body Param | `location.open` | `date` | **Required**. Hora de apertura de la ubicación de prestamo |
+| Body Param | `location.close` | `date` | **Required**. Hora de cierre de la ubicación de prestamo |
+| Body Param | `location.days` | `string[]` | **Required**. [ "L", "M", "W", "J","V", "S" , "D" ] Arreglo con la inicial de dias de la semana en que esta habil la ubicación de prestamo |
+| Body Param | `location.active` | `boolean` | **Required**. Bandera para ver si la ubicación de prestamo se encuentra disponible |
 
 ## Autor
 
