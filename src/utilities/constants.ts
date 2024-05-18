@@ -25,7 +25,7 @@ export const KEYS = {
 export const DATABASE = {
     userAuth: 'userByAuth',
     residential: 'residentials',
-    usersTower: 'userByResidentials'
+    usersTower: 'userByResidentials',
 }
 
 export const RESPONSE_OBJECT = {
