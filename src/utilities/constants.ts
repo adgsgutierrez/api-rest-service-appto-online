@@ -26,6 +26,7 @@ export const DATABASE = {
     userAuth: 'userByAuth',
     residential: 'residentials',
     usersTower: 'userByResidentials',
+    reserve: 'reserveLocations'
 }
 
 export const RESPONSE_OBJECT = {

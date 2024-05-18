@@ -174,6 +174,23 @@ El proyecto cuenta con la siguiente definición de api's
 | Body Param | `location.days` | `string[]` | **Required**. [ "L", "M", "W", "J","V", "S" , "D" ] Arreglo con la inicial de dias de la semana en que esta habil la ubicación de prestamo |
 | Body Param | `location.active` | `boolean` | **Required**. Bandera para ver si la ubicación de prestamo se encuentra disponible |
 
+#### Reservar ubicaciones de prestamo
+
+```http
+  GET /api/location/reserve
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+```
+
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Body Param | `idResidential` | `string` | **Required**. Id del conjunto del cual se reservará la ubicación de prestamo |
+| Body Param | `location.name` | `string` | **Required**. Nombre de la ubicación a reservar |
+| Body Param | `location.start` | `string` | **Required**. Fecha de inicio de la reserva |
+| Body Param | `location.end` | `string` | **Required**. Fecha de fin de la reserva |
+| Body Param | `user.name` | `string` | **Required**. Nombre del usuario que genera la reserva |
+| Body Param | `user.email` | `string` | **Required**. Correo del usuario que genera la reserva |
+
 ## Autor
 
 - [@Aric Dayan Gutierrez Sanchez](https://github.com/adgsgutierrez)
