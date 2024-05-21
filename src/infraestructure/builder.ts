@@ -27,9 +27,7 @@ export class Builder {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public start(): any[] {
         const classPath = this._path.join(__dirname, "./../api");
-        console.log(classPath);
         const classFiles = this.readAllFiles(classPath);
-        console.log(classFiles);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const arrayClasses: any[] = [];
         for (const fileName of classFiles) {
