@@ -24,7 +24,15 @@ export class Builder {
         return Builder.instance;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+/**
+ * La función `start` lee todos los archivos en un directorio específico, filtra las extensiones de
+ * archivos que no coinciden, carga módulos usando `require`, extrae funciones exportadas y devuelve
+ * instancias de esas funciones.
+ * @returns Una matriz de instancias de clases que se exportan desde los archivos en el directorio
+ * especificado.
+ */
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public start(): any[] {
         const classPath = this._path.join(__dirname, "./../api");
         const classFiles = this.readAllFiles(classPath);
@@ -45,6 +53,17 @@ export class Builder {
         return arrayClasses.map((especificClass) => new especificClass());
     }
 
+/**
+ * La función lee recursivamente todos los archivos en un directorio determinado y sus subdirectorios.
+ * @param {string} path - El parámetro `path` es una cadena que representa la ruta del directorio desde
+ * el cual desea leer todos los archivos de forma recursiva.
+ * @param {string[]} arrayOfFiles - El parámetro `arrayOfFiles` es una matriz que almacena las rutas de
+ * todos los archivos encontrados en el directorio especificado por el parámetro `path`. La función lee
+ * recursivamente todos los archivos del directorio y sus subdirectorios y agrega sus rutas a esta
+ * matriz.
+ * @returns La función `readAllFiles` devuelve una matriz de cadenas que contienen las rutas de todos
+ * los archivos dentro del directorio especificado y sus subdirectorios.
+ */
     private readAllFiles(path: string, arrayOfFiles: string[] = []): string[]{
         const files = this._fs.readdirSync(path);
         files.forEach((file) => {

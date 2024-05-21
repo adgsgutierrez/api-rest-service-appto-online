@@ -31,6 +31,20 @@ app.use( async (req, res, next) => {
 	}
 });
 
+/**
+ * La función `processRequest` procesa una solicitud combinando consulta, cuerpo y parámetros, luego
+ * llama al método `get` de un controlador y devuelve la respuesta.
+ * @param {Request} req - El parámetro `req` en la función `processRequest` suele ser un objeto que
+ * representa la solicitud HTTP. Contiene información sobre la solicitud entrante, como encabezados,
+ * cuerpo, parámetros, cadenas de consulta, etc. Generalmente la proporciona el servidor web que maneja
+ * la solicitud.
+ * @param {Response} res - El parámetro `res` en la función `processRequest` es un objeto que
+ * representa la respuesta HTTP que el servidor envía al cliente. Le permite configurar el código de
+ * estado de la respuesta usando `res.status()` y enviar datos JSON al cliente usando `res.json()`. En
+ * @param controller - El parámetro `controller` en la función `processRequest` es una instancia de la
+ * clase `ApiMaster` con un tipo `NoneParams`. Este controlador se utiliza para manejar la solicitud y
+ * recuperar los datos de respuesta en función de los parámetros que se le pasan.
+ */
 const processRequest = async (req: Request, res: Response , controller: ApiMaster<NoneParams>) => {
 	try{
 		const params = { ...req.query , ...req.body, ...req.params };
