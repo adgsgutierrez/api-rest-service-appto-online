@@ -1,5 +1,5 @@
 import { Firestore, QueryFieldFilterConstraint, query, where } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
+import { FirebaseOptions, initializeApp } from "firebase/app";
 import { doc , setDoc, getDoc, collection, getFirestore, getDocs } from "firebase/firestore"
 import { FIREBASE } from "../utilities/constants";
 import { IQueryOptions } from "../models/i.database";
@@ -14,7 +14,8 @@ export class DatabaseService{
  * una instancia de base de datos de Firestore.
  */
     private constructor(){
-        const app = initializeApp(FIREBASE);
+        const _config = FIREBASE as FirebaseOptions;
+        const app = initializeApp(_config);
         this.database = getFirestore(app);
     }
 
