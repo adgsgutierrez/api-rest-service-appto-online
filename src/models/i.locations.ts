@@ -1,4 +1,5 @@
 import { IResidentials } from "./i.residential";
+import { IBasicDataUser } from "./i.user";
 
 export interface IRequestLocations {
     idResidential: string;
@@ -10,10 +11,10 @@ export interface ILocations {
     close: Date;
     days: string[];
     active: boolean;
+    timeForLocation: number;
 }
 
-export interface IRequestCreateLocations {
-    idResidential: string;
+export interface IRequestCreateLocations extends IRequestLocations{
     location : ILocations;
 }
 
@@ -21,17 +22,14 @@ export interface IResidentialLocation extends IResidentials{
     location : ILocations[];
 }
 
-export interface IReserveRequest {
-    idResidential: string;
+export interface IReserveRequest extends IRequestLocations {
     location:{
         name: string;
+        occasion: string;
         start: Date;
         end: Date;
     };
-    user:{
-        name: string;
-        email: string;
-    }
+    user: IBasicDataUser
 }
 
 export interface ILoadReserva extends IReserveRequest {
@@ -39,3 +37,5 @@ export interface ILoadReserva extends IReserveRequest {
     dateAprobe: Date;
     userAprobe: string;
 }
+
+export interface IMeReserve extends IRequestLocations , IBasicDataUser {}
