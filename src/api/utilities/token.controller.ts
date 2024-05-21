@@ -27,7 +27,7 @@ export class TokenController extends ApiMaster<IToken> {
             const _cSecret = await bcrypt.compare(body.client_secret , client.client_secret);
             if(_cSecret && _cClient) {
                 const _payload = Buffer.from(JSON.stringify(body)).toString('base64')
-                const token = jwt.sign( { uuid: _payload } , KEYS.auth.secret , { expiresIn: KEYS.auth.expire , encoding: 'utf8' , algorithm: "HS512" });
+                const token = jwt.sign( { uuid: _payload } , KEYS.auth.secret as string , { expiresIn: KEYS.auth.expire , encoding: 'utf8' , algorithm: "HS512" });
                 return Promise.resolve({ ...RESPONSE_OBJECT[200] , data: { type: 'Bearer' ,  token , expire: KEYS.auth.expire } });
             }
             return Promise.resolve({ ...RESPONSE_OBJECT[401] });
@@ -50,7 +50,7 @@ export class TokenController extends ApiMaster<IToken> {
         if (token.indexOf('Bearer ') === -1 ){ return false; }
         try{
             const _token = token.replace('Bearer ', '');
-            const _payload: {uuid: string} = jwt.verify(_token , KEYS.auth.secret) as { uuid: ''};
+            const _payload: {uuid: string} = jwt.verify(_token , KEYS.auth.secret as string) as { uuid: ''};
             const _strClient = Buffer.from(_payload.uuid, 'base64').toString('ascii');
             const _vefiryToken: IToken = JSON.parse(_strClient) as IToken;
             const client = await this.database.getWithId<IToken>( DATABASE.userAuth , _vefiryToken.serial );
