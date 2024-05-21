@@ -8,6 +8,7 @@ import { ValidateUserController } from "./user/validate.controller";
 import { StatusController } from "./utilities/status.controller";
 import { TokenController } from "./utilities/token.controller";
 import { CreateReserveLocationController } from "./locations/create.reserve.locations.controller";
+import { ListMeReserveController } from "./locations/list.me.reserve.controller";
 
 const tokenService = new TokenController();
 
@@ -22,5 +23,6 @@ export const APIS = [
     new CreateLocationsController(),
     new ListLocationsController(),
     new CreateReserveLocationController(),
+    new ListMeReserveController(),
     tokenService
 ]

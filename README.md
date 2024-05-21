@@ -177,7 +177,7 @@ El proyecto cuenta con la siguiente definición de api's
 #### Reservar ubicaciones de prestamo
 
 ```http
-  GET /api/location/reserve
+  POST /api/location/reserve
   
   CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
 ```
@@ -190,6 +190,20 @@ El proyecto cuenta con la siguiente definición de api's
 | Body Param | `location.end` | `string` | **Required**. Fecha de fin de la reserva |
 | Body Param | `user.name` | `string` | **Required**. Nombre del usuario que genera la reserva |
 | Body Param | `user.email` | `string` | **Required**. Correo del usuario que genera la reserva |
+
+#### Listar mis reservas de ubicaciones
+
+```http
+  Get /api/location/list/me
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+```
+
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Query Param | `idResidential` | `string` | **Required**. Id del conjunto del cual se consultaran las reservas |
+| Query Param | `email` | `string` | **Required**. Correo a consultar asociado a la reserva |
+
 
 ## Autor
 
