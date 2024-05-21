@@ -1,6 +1,6 @@
 import { NoneParams } from "../../models/i.request";
 import { IResponse } from "../../models/i.response";
-import { ApiMaster } from "../api.master";
+import { ApiMaster } from "../../infraestructure/api.master";
 
 export class StatusController extends ApiMaster<NoneParams> {
 

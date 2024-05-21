@@ -2,7 +2,7 @@ import { IQueryOptions } from "../../models/i.database";
 import { ILoadReserva, IReserveRequest } from "../../models/i.locations";
 import { IResponse } from "../../models/i.response";
 import { DATABASE, RESPONSE_OBJECT } from "../../utilities/constants";
-import { ApiMaster } from "../api.master";
+import { ApiMaster } from "../../infraestructure/api.master";
 
 export class CreateReserveLocationController extends ApiMaster<IReserveRequest>{
 

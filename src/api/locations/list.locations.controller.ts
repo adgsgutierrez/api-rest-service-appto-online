@@ -1,7 +1,7 @@
 import { IRequestLocations, IResidentialLocation } from "../../models/i.locations";
 import { IResponse } from "../../models/i.response";
 import { DATABASE, RESPONSE_OBJECT } from "../../utilities/constants";
-import { ApiMaster } from "../api.master";
+import { ApiMaster } from "../../infraestructure/api.master";
 
 export class ListLocationsController extends ApiMaster<IRequestLocations> {
 
