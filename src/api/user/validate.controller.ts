@@ -2,7 +2,7 @@ import { IValidate } from "../../models/i.auth";
 import { IResponse } from "../../models/i.response";
 import { IUserPreRegister } from "../../models/i.user";
 import { DATABASE, RESPONSE_OBJECT } from "../../utilities/constants";
-import { ApiMaster } from "../api.master";
+import { ApiMaster } from "../../infraestructure/api.master";
 
 export class ValidateUserController extends ApiMaster<IValidate> {
 

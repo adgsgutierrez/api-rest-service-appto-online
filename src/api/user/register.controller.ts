@@ -3,7 +3,7 @@ import { IResponse } from "../../models/i.response";
 import { IUserPreRegister, IUserRegister } from "../../models/i.user";
 import { DATABASE, RESPONSE_OBJECT } from "../../utilities/constants";
 import { BASE64 } from "../../utilities/utils";
-import { ApiMaster } from "../api.master";
+import { ApiMaster } from "../../infraestructure/api.master";
 import { v4 as uuidv4 } from 'uuid';
 
 export class RegisterUserController extends ApiMaster<IUserRegister> {

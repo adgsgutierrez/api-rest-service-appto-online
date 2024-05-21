@@ -2,7 +2,7 @@ import { IQueryOptions } from "../../models/i.database";
 import { IResponse } from "../../models/i.response";
 import { IUserLogin, IUserLoginData, IUserPreRegister } from "../../models/i.user";
 import { DATABASE, RESPONSE_OBJECT } from "../../utilities/constants";
-import { ApiMaster } from "../api.master";
+import { ApiMaster } from "../../infraestructure/api.master";
 
 export class LoginController extends ApiMaster<IUserLogin> {
 

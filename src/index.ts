@@ -2,8 +2,8 @@
 require('dotenv').config();
 
 import { Request, Response } from "express";
-import { APIS, token } from "./api/controllers";
-import { ApiMaster } from "./api/api.master";
+import { APIS, token } from "./infraestructure/controllers";
+import { ApiMaster } from "./infraestructure/api.master";
 import expressListEndpoints from 'express-list-endpoints';
 import express from 'express';
 const app = express();
