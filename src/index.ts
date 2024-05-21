@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
+
 import { Request, Response } from "express";
 import { APIS, token } from "./api/controllers";
 import { ApiMaster } from "./api/api.master";
@@ -8,9 +11,6 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { RESPONSE_OBJECT } from "./utilities/constants";
 import { NoneParams } from "./models/i.request";
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config();
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())

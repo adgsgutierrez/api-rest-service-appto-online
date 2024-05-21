@@ -1,8 +1,12 @@
+import { ILogin } from "./i.auth";
 import { IResidentials } from "./i.residential";
 
-export interface IUserRegister {
+export interface IBasicDataUser {
     name: string;
     email: string;
+}
+
+export interface IUserRegister extends IBasicDataUser {
     residential: IResidentials;
     tower: string;
     number: number;
@@ -19,3 +23,5 @@ export interface IUserLogin{
     user: string;
     password: string;
 }
+
+export interface IUserLoginData extends ILogin , Partial<IBasicDataUser> {}

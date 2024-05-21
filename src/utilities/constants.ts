@@ -1,31 +1,36 @@
+import { ConfigService } from "../services/config";
+
+const config = ConfigService.get().run();
+
 export const FIREBASE = {
-    apiKey: "AIzaSyBaKvA9prbJpoqFq22vVBp78ae7yRJkTrU",
-    authDomain: "apptonline-de677.firebaseapp.com",
-    projectId: "apptonline-de677",
-    storageBucket: "apptonline-de677.appspot.com",
-    messagingSenderId: "617869375612",
-    appId: "1:617869375612:web:d554f4f4721215e52ef1f9",
-    measurementId: "G-5VJN08L8ZM"
+    apiKey: config['FIREBASE_apiKey'] || '',
+    authDomain: config['FIREBASE_authDomain'] || '',
+    projectId: config['FIREBASE_projectId'] || '',
+    storageBucket: config['FIREBASE_storageBucket'] || '',
+    messagingSenderId: config['FIREBASE_messagingSenderId'] || 0,
+    appId: config['FIREBASE_appId'] || '',
+    measurementId: config['FIREBASE_measurementId'] || ''
 };
 
 export const KEYS = {
     auth: {
-        secret: 'JTWr2rXF518vsDx9qvoHKC3UbhGAmnV0B9f',
+        secret: config['KEYS_auth_secret'] || '',
         expire: 3000
     },
     email: {
-        email: 'dxperience.co@gmail.com',
-        user: '617869375612-vtfekqapjcs9ojhpls16njlea8bgcbaq.apps.googleusercontent.com',
-        pwd: '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',
-        refresh: '1//04Q5MTQEkqc2sCgYIARAAGAQSNwF-L9IrIwvRpT-j2TqaFhXH6-gSnc65Uw-QlaQ1xtCcKBsIvDtZuvpjYtt3rpV7iFOf48JpXzA',
-        redirect: 'https://developers.google.com/oauthplayground'
+        email: config['KEYS_email_email'] || '',
+        user: config['KEYS_email_user'] || '',
+        pwd: config['KEYS_email_pwd'] || '',
+        refresh: config['KEYS_email_refresh'] || '',
+        redirect: config['KEYS_email_redirect'] || '',
     }
 }
 
 export const DATABASE = {
     userAuth: 'userByAuth',
     residential: 'residentials',
-    usersTower: 'userByResidentials'
+    usersTower: 'userByResidentials',
+    reserve: 'reserveLocations'
 }
 
 export const RESPONSE_OBJECT = {

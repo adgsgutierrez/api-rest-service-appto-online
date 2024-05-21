@@ -1,5 +1,5 @@
-import { Firestore, QueryFieldFilterConstraint, query, where } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
+import { Firestore, Query, QueryFieldFilterConstraint, and, or, query, where } from "firebase/firestore";
+import { FirebaseOptions, initializeApp } from "firebase/app";
 import { doc , setDoc, getDoc, collection, getFirestore, getDocs } from "firebase/firestore"
 import { FIREBASE } from "../utilities/constants";
 import { IQueryOptions } from "../models/i.database";
@@ -14,7 +14,8 @@ export class DatabaseService{
  * una instancia de base de datos de Firestore.
  */
     private constructor(){
-        const app = initializeApp(FIREBASE);
+        const _config = FIREBASE as FirebaseOptions;
+        const app = initializeApp(_config);
         this.database = getFirestore(app);
     }
 
@@ -115,13 +116,13 @@ export class DatabaseService{
  * siguientes propiedades:
  * @returns La función `buscar` devuelve una matriz de objetos de tipo `T`.
  */
-    public async search<T>( nameCollection: string , params: IQueryOptions[]): Promise<T[]>{
+    public async search<T>( nameCollection: string , params: IQueryOptions[] , conditional: 'and' | 'or' = 'and' ): Promise<T[]>{
         const arrayQueries: QueryFieldFilterConstraint[] = [];
         params.forEach( param => {
             arrayQueries.push ( where(param.key , param.compare , param.value ) );
         });
         const collectionResult = collection(this.database, nameCollection);
-        const _query = query( collectionResult , ...arrayQueries);
+        const _query: Query = query( collectionResult , (conditional === 'and') ? and(...arrayQueries) : or(...arrayQueries) );
         const response = await getDocs(_query);
         const values:T[] = [];
         response.forEach( doc => {

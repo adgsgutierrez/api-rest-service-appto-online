@@ -92,7 +92,7 @@ export class MailService {
     public async sendMail( destiny: string, subject: string, templateName: string ,  body: unknown ) : Promise<unknown> {
         const templates = await MailService.getTemplate( templateName , body);
         const mailOptions = {
-            from: KEYS.email.email,
+            from: KEYS.email.email as string,
             to: destiny,
             subject: subject,
            ...templates
@@ -113,12 +113,12 @@ export class MailService {
  */
     private static async path() {
         const oauth2Client = new OAuth2(
-            KEYS.email.user,
-            KEYS.email.pwd,
-            KEYS.email.redirect
+            KEYS.email.user as string,
+            KEYS.email.pwd as string,
+            KEYS.email.redirect as string
         );
         oauth2Client.setCredentials({
-            refresh_token: KEYS.email.refresh,
+            refresh_token: KEYS.email.refresh as string,
         });
         const accessToken = await new Promise((resolve, reject) => {
             oauth2Client.getAccessToken((err, token) => {
