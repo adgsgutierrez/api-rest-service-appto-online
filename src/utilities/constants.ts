@@ -3,26 +3,26 @@ import { ConfigService } from "../services/config";
 const config = ConfigService.get().run();
 
 export const FIREBASE = {
-    apiKey: config['FIREBASE.apiKey'] || '',
-    authDomain: config['FIREBASE.authDomain'] || '',
-    projectId: config['FIREBASE.projectId'] || '',
-    storageBucket: config['FIREBASE.storageBucket'] || '',
-    messagingSenderId: config['FIREBASE.messagingSenderId'] || 0,
-    appId: config['FIREBASE.appId'] || '',
-    measurementId: config['FIREBASE.measurementId'] || ''
+    apiKey: config['FIREBASE_apiKey'] || '',
+    authDomain: config['FIREBASE_authDomain'] || '',
+    projectId: config['FIREBASE_projectId'] || '',
+    storageBucket: config['FIREBASE_storageBucket'] || '',
+    messagingSenderId: config['FIREBASE_messagingSenderId'] || 0,
+    appId: config['FIREBASE_appId'] || '',
+    measurementId: config['FIREBASE_measurementId'] || ''
 };
 
 export const KEYS = {
     auth: {
-        secret: config['KEYS.auth.secret'] || '',
+        secret: config['KEYS_auth_secret'] || '',
         expire: 3000
     },
     email: {
-        email: config['KEYS.email.email'] || '',
-        user: config['KEYS.email.user'] || '',
-        pwd: config['KEYS.email.pwd'] || '',
-        refresh: config['KEYS.email.refresh'] || '',
-        redirect: config['KEYS.email.redirect'] || '',
+        email: config['KEYS_email_email'] || '',
+        user: config['KEYS_email_user'] || '',
+        pwd: config['KEYS_email_pwd'] || '',
+        refresh: config['KEYS_email_refresh'] || '',
+        redirect: config['KEYS_email_redirect'] || '',
     }
 }
 
