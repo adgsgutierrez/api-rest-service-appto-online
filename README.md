@@ -205,6 +205,37 @@ El proyecto cuenta con la siguiente definición de api's
 | Query Param | `email` | `string` | **Required**. Correo a consultar asociado a la reserva |
 
 
+#### Listar mis reservas de parkeaderos
+
+```http
+  Get /api/parking/list/me
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+```
+
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Query Param | `idResidential` | `string` | **Required**. Id del conjunto del cual se consultaran las reservas |
+| Query Param | `email` | `string` | **Required**. Correo a consultar asociado a la reserva de parqueadero |
+
+#### Crear reserva de parkeaderos
+
+```http
+  Post /api/parking
+  
+  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+```
+
+| Clase       | Nombre | Tipo     | Descripcion                |
+| :---------- | :----- | :------- | :------------------------- |
+| Body Param | `idResidential` | `string` | **Required**. Id del conjunto en el cual se cargaran las reservas |
+| Body Param | `user.email` | `string` | **Required**. Correo asociado a la reserva de parqueadero |
+| Body Param | `user.name` | `string` | **Optional**. Nombre del usuario asociado a la reserva de parqueadero |
+| Body Param | `type` | `string` | **Required**. Tipo de reserva del parqueadero M - para moto y C - para carro |
+| Body Param | `plate` | `string` | **Required**. Placa asociada al vehiculo que ingresará al conjunto |
+| Body Param | `dateInitial` | `string` | **Required**. Fecha y hora de ingreso del vehiculo |
+| Body Param | `dateEnd` | `string` | **Required**. Fecha y hora de salida del vehiculo |
+
 ## Autor
 
 - [@Aric Dayan Gutierrez Sanchez](https://github.com/adgsgutierrez)
