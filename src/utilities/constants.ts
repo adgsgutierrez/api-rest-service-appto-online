@@ -30,7 +30,8 @@ export const DATABASE = {
     userAuth: 'userByAuth',
     residential: 'residentials',
     usersTower: 'userByResidentials',
-    reserve: 'reserveLocations'
+    reserve: 'reserveLocations',
+    parking: 'reserveParking'
 }
 
 export const RESPONSE_OBJECT = {
