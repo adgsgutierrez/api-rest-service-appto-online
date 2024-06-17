@@ -5,11 +5,14 @@ import { RESPONSE_OBJECT } from "../../utilities/constants";
 
 export class UploadVoucherController extends ApiMaster<IRequestFileData>{
 
-    readonly METHOD = 'Post';
+    readonly METHOD = 'POST';
     readonly PATH = '/api/voucher';
 
     async get(body: IRequestFileData): Promise<IResponse> {
-        console.log(body);
+        if (body.voucher.size === 0 ){
+            return { ...RESPONSE_OBJECT[200], data: {status: 100 , message : 'Se debe adjuntar un archivo'} };
+        }
+        
         return { ...RESPONSE_OBJECT[200] };
     }
 
