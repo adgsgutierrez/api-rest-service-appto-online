@@ -11,6 +11,41 @@ Para realizar la instalación de este proyecto se deben seguir os siguientes pas
   cd api-rest-service-appto-online
   npm install
 ```
+Luego crea el archivo de configuración .env en la raíz del proyecto con las siguientes variables
+
+```bash
+  # FIREBASE APIS -- Obtenidos del panel de configuración de firebase
+  FIREBASE_apiKey
+  FIREBASE_authDomain
+  FIREBASE_projectId
+  FIREBASE_storageBucket
+  FIREBASE_messagingSenderId
+  FIREBASE_appId
+  FIREBASE_measurementId
+
+  # FIREBASE ADMIN -- Obtenidos del archivo de configuración de firebase
+  FREBASE_ADMIN_type
+  FREBASE_ADMIN_project_id
+  FREBASE_ADMIN_private_key_id
+  FREBASE_ADMIN_private_key
+  FREBASE_ADMIN_client_email
+  FREBASE_ADMIN_client_id
+  FREBASE_ADMIN_auth_uri
+  FREBASE_ADMIN_token_uri
+  FREBASE_ADMIN_auth_provider_x509_cert_url
+  FREBASE_ADMIN_client_x509_cert_url
+  FREBASE_ADMIN_universe_domain
+
+  # AUTH - EMAIL -- Obtenidos de la consola de google cuando se habilita el servicio de email
+  KEYS_auth_secret
+  KEYS_email_email
+  KEYS_email_user
+  KEYS_email_pwd
+  KEYS_email_refresh
+  KEYS_email_redirect
+```
+
+
 ## Development
 
 Para mantener el servidor en modo escucha mientras se realizan desarrollos
@@ -45,196 +80,21 @@ El proyecto cuenta con la siguiente definición de api's
 
 ### Utilerias
 
-#### Obtener el estado del servidor, si se encuentra activo y en ejecución
+Crea en postman las siguientes variables de entorno
 
-```http
-  GET /api/utilities/status
-
-  SIN SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
+Entorno Local
+```bash
+  | Variable                  | Valor              |
+  |---------------------------|--------------------|
+  | protocol                  | http               |
+  | host                      | localhost:3000     |
+  | appto_token_authorization |                    |
+  | appto_serial              | <KeyBaseDatos>     |
+  | appto_client              | <KeyBaseDatos>     |
+  | appto_client_secret       | <KeyBaseDatos>     |
 ```
 
-#### Obtener un token para incovar las api
-
-```http
-  POST /api/utilities/token
-
-  SIN SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Body Param | `serial` | `string` | **Required**. Id de identificación del registro de la base de datos |
-| Body Param | `client` | `string` | **Required**. Id del registro del cliente que realiza el consumo de la aplicación |
-| Body Param | `client_secret` | `string` | **Required**. Id del secret del cliente que realiza la petición |
-
-### APIS de la sección de Conjuntos
-
-#### Listar los conjustos registrados en la aplicación
-
-```http
-  GET /api/residential/list
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-#### Guardar un conjunto en la aplicación
-
-```http
-  POST /api/residential
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Body Param | `address` | `string` | **Required**. Dirección locativa del conjunto |
-| Body Param | `name` | `string` | **Required**. Nombre del conjunto |
-| Body Param | `lat` | `number` | **Required**. Latitud del conjunto |
-| Body Param | `long` | `number` | **Required**. Longitud del conjunto |
-| Body Param | `nameAdministrator` | `string` | **Required**. Nombre del administrador actual del conjunto |
-| Body Param | `email` | `string` | **Required**. Email de la administración del conjunto |
-| Body Param | `phone` | `string` | **Required**. Celular de la administración del conjunto |
-| Body Param | `localPhone` | `string` | **Required**. Telefono fijo de la administración del conjunto |
-
-### APIS de la sección de usuarios
-
-#### Registrar usuario en la aplicación
-
-```http
-  POST /api/user/register
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Body Param | `name` | `string` | **Required**. Nombre de la persona que realiza el registro |
-| Body Param | `email` | `string` | **Required**. Email de la persona que realiza el registro |
-| Body Param | `residential.id` | `string` | **Required**. Id del conjunto |
-| Body Param | `residential.address` | `string` | **Required**. Dirección del conjunto |
-| Body Param | `residential.name` | `string` | **Required**. Nombre del conjunto |
-| Body Param | `tower` | `string` | **Required**. Torre del conjunto a la que pertenece el usuario que registra |
-| Body Param | `number` | `string` | **Required**. Numero del apartamento al que pertenece el usuario que registra |
-| Body Param | `password` | `string` | **Required**. Contraseña que desea utilizar el usuario que registra |
-| Body Param | `validatePassword` | `string` | **Required**. Confirmación de contraseña del usuario que registra |
-
-#### Iniciar sesión en la aplicación
-
-```http
-  POST /api/user/login
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Body Param | `user` | `string` | **Required**. Correo de la persona que ingresa a la aplicación |
-| Body Param | `password` | `string` | **Required**. Contraseña de la persona que ingresa a la aplicación |
-
-#### Validar usuario registrado en la aplicación
-
-```http
-  POST /api/user/validate
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Query Param | `id` | `string` | **Required**. Id recibido por correo para validar correos existentes |
-
-### APIS de la sección de Ubicaciones de prestamo
-
-#### Listar ubicaciones de prestamo
-
-```http
-  GET /api/location/list
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Query Param | `idResidential` | `string` | **Required**. Id del conjunto del cual se buscarán las ubicaciones de prestamo |
-
-#### Crear ubicaciones de prestamo
-
-```http
-  POST /api/location
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Body Param | `idResidential` | `string` | **Required**. Id del conjunto del cual se buscarán las ubicaciones de prestamo |
-| Body Param | `location.name` | `string` | **Required**. Nombre de la ubicación de prestamo |
-| Body Param | `location.open` | `date` | **Required**. Hora de apertura de la ubicación de prestamo |
-| Body Param | `location.close` | `date` | **Required**. Hora de cierre de la ubicación de prestamo |
-| Body Param | `location.days` | `string[]` | **Required**. [ "L", "M", "W", "J","V", "S" , "D" ] Arreglo con la inicial de dias de la semana en que esta habil la ubicación de prestamo |
-| Body Param | `location.active` | `boolean` | **Required**. Bandera para ver si la ubicación de prestamo se encuentra disponible |
-
-#### Reservar ubicaciones de prestamo
-
-```http
-  POST /api/location/reserve
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Body Param | `idResidential` | `string` | **Required**. Id del conjunto del cual se reservará la ubicación de prestamo |
-| Body Param | `location.name` | `string` | **Required**. Nombre de la ubicación a reservar |
-| Body Param | `location.start` | `string` | **Required**. Fecha de inicio de la reserva |
-| Body Param | `location.end` | `string` | **Required**. Fecha de fin de la reserva |
-| Body Param | `user.name` | `string` | **Required**. Nombre del usuario que genera la reserva |
-| Body Param | `user.email` | `string` | **Required**. Correo del usuario que genera la reserva |
-
-#### Listar mis reservas de ubicaciones
-
-```http
-  Get /api/location/list/me
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Query Param | `idResidential` | `string` | **Required**. Id del conjunto del cual se consultaran las reservas |
-| Query Param | `email` | `string` | **Required**. Correo a consultar asociado a la reserva |
-
-
-#### Listar mis reservas de parkeaderos
-
-```http
-  Get /api/parking/list/me
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Query Param | `idResidential` | `string` | **Required**. Id del conjunto del cual se consultaran las reservas |
-| Query Param | `email` | `string` | **Required**. Correo a consultar asociado a la reserva de parqueadero |
-
-#### Crear reserva de parkeaderos
-
-```http
-  Post /api/parking
-  
-  CON SEGURIDAD DE HEADER AUTORIZACIÓN CON Bearer <TOKEN>
-```
-
-| Clase       | Nombre | Tipo     | Descripcion                |
-| :---------- | :----- | :------- | :------------------------- |
-| Body Param | `idResidential` | `string` | **Required**. Id del conjunto en el cual se cargaran las reservas |
-| Body Param | `user.email` | `string` | **Required**. Correo asociado a la reserva de parqueadero |
-| Body Param | `user.name` | `string` | **Optional**. Nombre del usuario asociado a la reserva de parqueadero |
-| Body Param | `type` | `string` | **Required**. Tipo de reserva del parqueadero M - para moto y C - para carro |
-| Body Param | `plate` | `string` | **Required**. Placa asociada al vehiculo que ingresará al conjunto |
-| Body Param | `dateInitial` | `string` | **Required**. Fecha y hora de ingreso del vehiculo |
-| Body Param | `dateEnd` | `string` | **Required**. Fecha y hora de salida del vehiculo |
+[@Descarga de postman](https://github.com/adgsgutierrez/api-rest-service-appto-online/blob/main/Apto-Online.postman_collection.json)
 
 ## Autor
 

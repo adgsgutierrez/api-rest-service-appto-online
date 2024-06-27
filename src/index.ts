@@ -11,12 +11,14 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { RESPONSE_OBJECT } from "./utilities/constants";
 import { NoneParams } from "./models/i.request";
+import fileUpload from 'express-fileupload';
 
-app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.json());
+app.use(fileUpload());
 app.use(express.static('public'));
 app.use(cors( { origin: '*', methods: ['GET','POST','PUT'] }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use( async (req, res, next) => {
 	const api = APIS.find( api => api.PATH === req.path );
 	if(api?.SECURE){
@@ -47,10 +49,11 @@ app.use( async (req, res, next) => {
  */
 const processRequest = async (req: Request, res: Response , controller: ApiMaster<NoneParams>) => {
 	try{
-		const params = { ...req.query , ...req.body, ...req.params };
+		const params = { ...req.query , ...req.body, ...req.params, ...req.files };
 		const response = await controller.get(params);
 		res.status(response.code).json( response );
 	}catch (err){
+		console.error(err);
 		res.status(500).send(err);
 	}
 }
