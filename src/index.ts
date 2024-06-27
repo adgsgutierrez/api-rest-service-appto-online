@@ -53,6 +53,7 @@ const processRequest = async (req: Request, res: Response , controller: ApiMaste
 		const response = await controller.get(params);
 		res.status(response.code).json( response );
 	}catch (err){
+		console.error(err);
 		res.status(500).send(err);
 	}
 }

@@ -12,6 +12,20 @@ export const FIREBASE = {
     measurementId: config['FIREBASE_measurementId'] || ''
 };
 
+export const FIREBASE_ADMIN = {
+    type: config['FREBASE_ADMIN_type'],
+    project_id: config['FREBASE_ADMIN_project_id'],
+    private_key_id: config['FREBASE_ADMIN_private_key_id'],
+    private_key: ('' + config['FREBASE_ADMIN_private_key']).replace(/\\n/g, '\n'),
+    client_email: config['FREBASE_ADMIN_client_email'],
+    client_id: config['FREBASE_ADMIN_client_id'],
+    auth_uri: config['FREBASE_ADMIN_auth_uri'],
+    token_uri: config['FREBASE_ADMIN_token_uri'],
+    auth_provider_x509_cert_url: config['FREBASE_ADMIN_auth_provider_x509_cert_url'],
+    client_x509_cert_url: config['FREBASE_ADMIN_client_x509_cert_url'],
+    universe_domain: config['FREBASE_ADMIN_universe_domain']
+}
+
 export const KEYS = {
     auth: {
         secret: config['KEYS_auth_secret'] || '',
@@ -31,7 +45,9 @@ export const DATABASE = {
     residential: 'residentials',
     usersTower: 'userByResidentials',
     reserve: 'reserveLocations',
-    parking: 'reserveParking'
+    parking: 'reserveParking',
+    voucher: 'vouchers',
+    notification: 'notifications'
 }
 
 export const RESPONSE_OBJECT = {

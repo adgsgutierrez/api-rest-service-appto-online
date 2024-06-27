@@ -1,3 +1,5 @@
+import { IFile } from "./i.transversal";
+
 export interface IRequestPay {
     email: string;
     date: Date;
@@ -6,15 +8,13 @@ export interface IRequestPay {
 }
 
 export interface IRequestFileData extends IRequestPay {
-    voucher: {
-        name: string;
-        data: Buffer;
-        size: number;
-        encoding: string;
-        tempFilePath: string;
-        mimetype: string;
-        md5: string;
-        truncated: boolean;
-        mv: unknown;
-    };
+    voucher: IFile;
+}
+
+export interface IVoucher {
+    idResidentials: string;
+    email: string;
+    date: Date;
+    verify: boolean;
+    url: string;
 }
